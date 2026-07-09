@@ -1,0 +1,9 @@
+# Local runtime artifacts
+*.log
+*.tmp
+*.bak
+
+# Windows shell metadata
+Thumbs.db
+Desktop.ini
+
