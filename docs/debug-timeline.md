@@ -2,7 +2,7 @@
 
 ## 1. Initial Symptom
 
-A Bluetooth mouse frequently disconnected. After Bluetooth was turned off on the laptop, Windows no longer showed a Bluetooth icon or switch that could turn it back on.
+Bluetooth became unstable. The first visible symptom was a Bluetooth peripheral disconnecting repeatedly. After Bluetooth was turned off on the laptop, Windows no longer showed a Bluetooth icon or switch that could turn it back on.
 
 ## 2. Service Check
 
@@ -14,7 +14,7 @@ bthserv: Running
 
 This showed that the service layer was not the primary failure.
 
-## 3. Bluetooth Device Query
+## 3. Bluetooth Adapter Query
 
 The Bluetooth Plug and Play device list showed the main adapter:
 
@@ -23,7 +23,7 @@ Intel(R) Wireless Bluetooth(R)
 Status: Stopped
 ```
 
-Paired devices and Bluetooth profiles were visible, but most were disconnected. The main adapter state was the important clue.
+Paired devices and Bluetooth profiles were visible, but the main adapter state was the important clue.
 
 ## 4. First Enable Attempt
 
@@ -70,7 +70,7 @@ The local Bluetooth adapter has failed in an undetermined manner and will not be
 The driver has been unloaded.
 ```
 
-This confirmed that the local Bluetooth adapter, not the mouse, was the root failure.
+This confirmed that the local Bluetooth adapter was the root failure.
 
 ## 8. Full Shutdown
 
@@ -107,4 +107,3 @@ bthserv: Running
 ```
 
 No new Bluetooth `BTHUSB` errors appeared in the final event-log check.
-

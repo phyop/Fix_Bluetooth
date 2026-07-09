@@ -1,17 +1,19 @@
-# Bluetooth Mouse Disconnect Debug Case Study
+# 260709_Fix_Bluetooth
 
-This repository documents a real Windows Bluetooth troubleshooting case: a Bluetooth mouse became unreliable, then the Bluetooth icon and switch disappeared after Bluetooth was turned off.
+This repository documents a real Windows Bluetooth troubleshooting case: Bluetooth became unstable, the Bluetooth icon and switch disappeared, and Windows stopped exposing a usable Bluetooth radio.
 
-The final working state was restored by fully powering off the laptop, waiting more than 15 seconds, then enabling the Intel Bluetooth adapter again from an elevated PowerShell session.
+The issue was first noticed because a Bluetooth peripheral disconnected repeatedly, but the peripheral was not the root cause. The actual failure was the local Intel Bluetooth adapter. Windows logged adapter timeouts, unloaded the Bluetooth driver, and left the system without a started Bluetooth adapter.
+
+The final working state was restored by fully powering off the laptop, waiting more than 15 seconds, booting again, and enabling the Intel Bluetooth adapter from an elevated PowerShell session.
 
 ## Problem
 
-The initial symptom was a Bluetooth mouse that frequently disconnected. After Bluetooth was manually turned off on the laptop, Windows no longer showed a usable Bluetooth icon or switch to turn it back on.
+After Bluetooth was turned off on the laptop, Windows no longer showed a usable Bluetooth icon or switch to turn it back on.
 
-This looked like a UI problem at first, but the system evidence pointed deeper:
+At first this looked like a Windows UI problem. The system evidence pointed deeper:
 
 - the Bluetooth support service was running
-- paired Bluetooth devices still existed in Windows history
+- paired Bluetooth device history still existed
 - the main Intel Bluetooth adapter was not started
 - Windows event logs showed the Bluetooth USB driver had unloaded the adapter after it stopped responding
 
@@ -42,24 +44,24 @@ Immediately before that, Windows also logged:
 A command sent to the adapter has timed out. The adapter did not respond.
 ```
 
-That means the Bluetooth mouse was not the root problem. The local Bluetooth adapter itself had stopped responding, so Windows unloaded the driver and the Bluetooth UI disappeared.
+This confirmed that the failure was below the paired-device layer. Windows had lost a working local Bluetooth adapter, so the Bluetooth UI disappeared.
 
 ## Debugging Path
 
 The investigation followed this path:
 
-1. Checked Bluetooth services.
+1. Checked whether the Bluetooth support service was running.
 2. Queried Plug and Play Bluetooth devices.
 3. Found `Intel(R) Wireless Bluetooth(R)` in a non-working state.
 4. Tried enabling and restarting the adapter with `pnputil`.
-5. Opened Windows Bluetooth settings and Device Manager.
+5. Opened Windows Bluetooth settings and Device Manager to confirm the UI state.
 6. Checked Windows System event logs.
 7. Found `BTHUSB` adapter timeout and driver unload events.
 8. Performed a full shutdown and waited more than 15 seconds.
 9. Rechecked adapter state after boot.
 10. Found the adapter had changed from `Stopped` to `Disabled`.
 11. Enabled the adapter from an elevated PowerShell session.
-12. Verified the adapter reached `Started`.
+12. Verified the adapter reached `Started` and no new Bluetooth errors appeared.
 
 ## Final Fix
 
@@ -89,7 +91,7 @@ The Bluetooth support service was also healthy:
 bthserv: Running
 ```
 
-No new `BTHUSB` Bluetooth errors appeared in the final five-minute event-log check.
+No new `BTHUSB` Bluetooth errors appeared in the final event-log check.
 
 ## Why Full Shutdown Helped
 
@@ -99,7 +101,7 @@ A full shutdown gave the wireless module a chance to lose power and reset. After
 
 ## Public Files
 
-- [Medium article draft](medium-bluetooth-mouse-disconnect-debug-article.md)
+- [Medium article draft](medium-bluetooth-debug-article.md)
 - [Debug timeline](docs/debug-timeline.md)
 - [Final fix](docs/final-fix.md)
 - [Privacy notes](docs/privacy.md)
@@ -117,4 +119,3 @@ This repository intentionally avoids publishing:
 ## Disclaimer
 
 This is a personal troubleshooting case study. Bluetooth failures can come from drivers, firmware, USB power management, Windows settings, radio interference, or device battery issues. The steps here are useful for reasoning through a similar failure, but they are not a universal repair script.
-
