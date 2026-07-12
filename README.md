@@ -392,7 +392,8 @@ The event messages are preserved because they are the most useful part of the ca
 
 ## Repository Files
 
-- [Medium article draft](medium-bluetooth-debug-article.md)
+- [Medium article source](medium-bluetooth-debug-article.md)
+- [Read the published Medium article](https://medium.com/@seek1andfind2/debugging-a-windows-intel-bluetooth-adapter-that-stopped-responding-a2532cd2f4c7)
 - [Debug timeline](docs/debug-timeline.md)
 - [Final fix](docs/final-fix.md)
 - [Privacy notes](docs/privacy.md)
