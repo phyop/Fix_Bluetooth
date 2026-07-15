@@ -1,6 +1,6 @@
 # Content Pack
 
-Reusable public content for the `260709_Fix_Bluetooth` case study.
+Reusable public content for the `Fix_Bluetooth` case study.
 
 ## Positioning
 

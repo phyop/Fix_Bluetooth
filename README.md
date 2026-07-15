@@ -1,4 +1,4 @@
-# 260709_Fix_Bluetooth
+# Fix_Bluetooth
 
 Public case study for a real Windows Bluetooth recovery session on 2026-07-09 in the Asia/Taipei timezone.
 
@@ -71,7 +71,7 @@ flowchart TD
 ## Folder Structure
 
 ```text
-260709_Fix_Bluetooth/
+Fix_Bluetooth/
 ├── README.md
 ├── medium-bluetooth-debug-article.md
 └── docs/
