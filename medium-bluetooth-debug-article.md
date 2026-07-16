@@ -1,28 +1,5 @@
 # Debugging a Windows Intel Bluetooth Adapter That Stopped Responding
 
-## Title Ideas
-
-1. Debugging a Windows Intel Bluetooth Adapter That Stopped Responding
-2. When the Bluetooth Switch Disappears: A Windows Adapter Debugging Story
-3. How a BTHUSB Event Log Led to a Bluetooth Recovery Fix
-4. Windows Bluetooth Was Running, But the Adapter Was Not Started
-5. Fixing an Intel Bluetooth Adapter Stuck After Driver Unload
-6. The Bluetooth Icon Disappeared: Service Healthy, Adapter Broken
-
-## SEO
-
-- SEO title: Debugging a Windows Intel Bluetooth Adapter That Stopped Responding
-- Meta description: A real Windows Bluetooth troubleshooting case where BTHUSB timeout and driver unload events led to a full shutdown, elevated pnputil enable step, and verified Intel Bluetooth recovery.
-- Suggested slug: windows-intel-bluetooth-adapter-bthusb-debug
-- Focus keywords: Windows Bluetooth missing switch, Intel Wireless Bluetooth stopped, BTHUSB driver unloaded, pnputil enable device, Bluetooth adapter timed out
-- Audience: Windows power users, support engineers, IT troubleshooters, and technical writers turning debugging work into public case studies.
-
-## Tags
-
-Windows, Bluetooth, Debugging, PowerShell, Device Manager, Intel, Troubleshooting, Technical Writing
-
-## Article
-
 The first visible symptom looked ordinary. A Bluetooth peripheral disconnected repeatedly, which made the problem feel like a typical wireless annoyance: maybe the peripheral battery was low, maybe pairing state had become stale, maybe interference was higher than usual, or maybe Windows just needed the device removed and paired again.
 
 Then the real symptom appeared.
